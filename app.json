@@ -17,6 +17,32 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "expo": {
+      "name": "newnihon",
+      "slug": "your-app-slug",
+      "version": "1.0.0",
+      "plugins": [
+        [
+          "@react-native-firebase/app",
+          {
+            "ios": {
+              "apiKey": "YOUR_API_KEY",
+              "appId": "YOUR_APP_ID"
+            },
+            "android": {
+              "apiKey": "YOUR_API_KEY",
+              "appId": "YOUR_APP_ID"
+            }
+          }
+        ]
+      ],
+      "android": {
+        "googleServicesFile": "path/to/google-services.json"
+      },
+      "ios": {
+        "googleServicesFile": "path/to/GoogleService-Info.plist"
+      }
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.myreactapp.myreactapp"
