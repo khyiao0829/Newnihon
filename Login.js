@@ -3,9 +3,10 @@ import { StatusBar, Dimensions } from 'react-native';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
-import { useNavigation } from '@react-navigation/core';
 import { app } from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
+import 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const auth = getAuth(app);
 const firesotre = getFirestore(app);
@@ -28,21 +29,13 @@ const windowHeight = Dimensions.get('window').height;
   persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 });*/
 
-export default goLogin=()=>{
+const Login=()=>{
     const [email, setEmail] = useState('');
     const [password, setPassword]= useState('');
   
-    const navigation = useNavigation()
-  
-    useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace('Learning');
-      }
-    });
-  
-    return unsubscribe;
-  }, []);
+    const navigation = useNavigation();
+
+    
   
   
   const handleLogin = () =>{
@@ -60,16 +53,17 @@ export default goLogin=()=>{
         setDoc(userDoc, { name: ' '})
           .then(() =>{
             console.log('Firestore에 데이터 설정 완료');
+            navigation.replace('Learning');
           })
           .catch((error)=>{
             console.error('Firesotre 데이터 설정 오류:', error);
           })
        })
        .catch(error => alert(error.message))
-    }
+    };
   
     const handleSignUp = () =>{
-      navigation.replace('Signup')
+      navigation.navigate('Signup')
     }
     const styles = StyleSheet.create({
         container: {
@@ -81,7 +75,7 @@ export default goLogin=()=>{
         },
         logo: {
           width: windowWidth * 0.73,
-          height: windowHeight * 0.05,
+          height: windowHeight * 0.06,
         },
         customText: {
           color: '#990011b2',
@@ -165,5 +159,5 @@ return (
   function handleForgotPassword() {
     // "계정을 잊으셨나요?" 클릭 시 수행할 동작
   }
-
 }
+export default Login;

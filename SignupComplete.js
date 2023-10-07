@@ -1,14 +1,15 @@
 import React from 'react';
 import { StatusBar, Dimensions } from 'react-native';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import 'react-native-gesture-handler';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export default function SignUp({ navigation }) {
-  function handleBackPress() {
-    navigation.goBack(); // 뒤로 가기
-  }
+const SignupComplete=()=> {
+  const navigation = useNavigation();
+
   function handleLoginButton() {
     navigation.navigate('Login');
   }
@@ -75,3 +76,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default SignupComplete;

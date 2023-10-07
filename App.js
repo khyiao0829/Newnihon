@@ -1,50 +1,59 @@
+import React,{ useState, useEffect } from 'react';
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import {createStackNavigator } from "@react-navigation/stack";
-import React, { useState, useEffect } from 'react';
-import { StatusBar, Dimensions } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import 'react-native-gesture-handler';
 
-import Login from './Login'; // Login.js 파일 경로에 따라 수정
-import Signup from './Signup'; // Signup.js 파일 경로에 따라 수정
-import Learning from './Learning'; // Learning.js 파일 경로에 따라 수정
-import SignupComplete from './SignupComplete'; // SignupComplete.js 파일 경로에 따라 수정
-import { onAuthStateChanged, getReactNativePersistence, initializeAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage'
-//import { initializeApp } from "firebase/app";
+
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+
+import Login from './Login';
+import Signup from './Signup';
+import Learning from './Learning';
+import Review from './Review';
+import Vocabulary from './Vocabulary';
+import SignupComplete from './SignupComplete';
+import SideMenu from './SideMenu';
+import WordQuiz from './WordQuiz';
+
 import { app } from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
 
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
 const auth = getAuth(app);
 
-const Stack = createStackNavigator();
+
+
+function MainStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="SignupComplete" component={SignupComplete} />
+      <Stack.Screen name="Learning" component={Learning} />
+      <Stack.Screen name="WordQuiz" component={WordQuiz} />
+    </Stack.Navigator>
+  );
+}
 
 export default function App(){
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        //const navigation = useNavigation();
-        //navigation.replace('Learning');
-        <Stack.Screen name="Learning" component={Learning} />
-      }
-    });
-  
-    return unsubscribe;
-  }, []);
-
 return (
   <NavigationContainer>
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false, // 헤더 비활성화
-      }}
+      <Drawer.Navigator
+        drawerContent={(props) => <SideMenu {...props} />}
+        screenOptions={{
+          headerShown: false,
+          drawerType: "front"
+        }}
       >
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Signup" component={Signup} />
-      <Stack.Screen name="Learning" component={Learning} />
-      <Stack.Screen name="SignupComplete" component={SignupComplete} />
-    </Stack.Navigator>
-  </NavigationContainer>
+        <Drawer.Screen name="MainStack" component={MainStack} />
+        <Drawer.Screen name="Review" component={Review} />
+        <Drawer.Screen name="Vocabulary" component={Vocabulary} />
+      </Drawer.Navigator>
+    </NavigationContainer>
 );
 }
   

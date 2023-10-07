@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { app } from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
+import 'react-native-gesture-handler';
 
 const auth = getAuth(app);
 //import { initializeApp } from 'firebase/app';
@@ -31,17 +32,7 @@ const Signup=()=>{
   const [email, setEmail] = useState('');
   const [password, setPassword]= useState('');
 
-  const navigation = useNavigation()
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace('Login');
-      }
-  });
-  
-    return unsubscribe;
-}, []);
+  const navigation = useNavigation();
 
 const handleBackPress = () => {
   navigation.goBack(); // 뒤로 가기
@@ -53,7 +44,7 @@ const handleSignUpButton = () => {
       console.log("Signed in with",user.email);
      })
      .catch(error => alert(error.message))
-    navigation.navigate('SignupComplete');
+    navigation.replace('SignupComplete');
   }
 
   return (

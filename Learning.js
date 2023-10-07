@@ -1,68 +1,123 @@
 import React from 'react';
-import { View, Text, StatusBar, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StatusBar, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
-export default function Learning({navigation}) {
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+export default function Learning({ navigation }) {
+  const handleBoxClick = (boxNumber) => {
+    // 클릭 가능한 박스를 눌렀을 때 수행할 동작 추가
+    // 예: navigation.navigate('다음 화면');
+  };
+
+  const handleMenuPress = () => {
+    // 메뉴 아이콘을 눌렀을 때 드로어를 열도록 합니다.
+    navigation.openDrawer();
+  };
+
+  const handleQuizStart = () => {
+    navigation.navigate('WordQuiz');
+  };
+
+  const boxes = Array.from({ length: 10 }, (_, index) => (
+    <TouchableOpacity key={index} onPress={() => handleBoxClick(index + 1)}>
+      <View style={styles.clickableBox}>
+        <Text style={styles.boxText}> 기사 {index + 1}</Text>
+      </View>
+    </TouchableOpacity>
+  ));
+
   return (
+    <ScrollView style={styles.scrollContainer}>
     <View style={styles.container}>
-    <TouchableOpacity>
-      <Image source={require('./assets/menu.png')} style={styles.logo} />
+    <TouchableOpacity onPress={handleMenuPress}>
+        <Image source={require('./assets/menu.png')} style={styles.menu} />
       </TouchableOpacity>
-      <Image source={require('./assets/human.png')} style={styles.img} />
-      <TouchableOpacity style={styles.Button}>
+      <Image source={require('./assets/human.png')} style={styles.human} />
+      <TouchableOpacity style={styles.Button} onPress={handleQuizStart}>
         <Text style={styles.ButtonText}>오늘의 단어 퀴즈 GO!</Text>
       </TouchableOpacity>
+      <Text style={styles.customText}>학습하고 싶은 기사를 골라보세요!</Text>
+      <View style={styles.boxContainer}>
+          {boxes}
+        </View>
       <StatusBar style="auto" />
     </View>
-    
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1, // 스크롤 가능한 영역을 확장합니다.
+    backgroundColor: "#FCF6F5",
+  },
   container: {
     flex: 1,
-    alignItems: 'flex-start',
-    backgroundColor:"#FCF6F5"
+    justifyContent: 'flex-start',
+    paddingHorizontal: windowWidth * 0.1,
+    paddingTop: windowHeight * 0.09,
   },
-  logo: {
-    width: 35,
-    height: 35,
-    top: 35,
+  menu: {
+    left: windowWidth*0.009, // 원하는 좌측 여백으로 조정
+    position: 'absolute',
+    width: windowWidth * 0.057,
+    height: windowHeight * 0.047,
   },
-  img:{
-     justifyContent:'flex-end'
+  human: {
+    top:windowHeight*0.115, // 원하는 높이로 조정
+    right: windowWidth*0.07, // 원하는 좌측 여백으로 조정
+    position: 'absolute',
+    width: windowWidth * 0.33,
+    height: windowHeight * 0.2,
   },
   Button: {
-    width: 140,
-    height: 35,
-    backgroundColor: '#fef65b',
+    position: 'absolute',
+    top:windowHeight*0.213, // 원하는 높이로 조정
+    left: windowWidth*0.09, // 원하는 좌측 여백으로 조정
+    width: windowWidth*0.47,
+    height: windowHeight * 0.06,
+    backgroundColor: '#990011',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 5,
     borderRadius: 20,
-    top: 1,
   },
   ButtonText: {
-    color: '#000000',
-    fontSize: 10,
+    color: '#ffffff',
+    fontSize: windowWidth*0.035,
     fontWeight: 'bold',
   },
-  AdditionalText: {
-    color: '#b30101',
-    fontSize: 10,
-    fontWeight: '700',
-    marginTop: 10,
-    textAlign:'center',
+  customText: {
+    color: '#282828',
+    position: 'absolute',
+    top:windowHeight*0.269, // 원하는 높이로 조정
+    left: windowWidth*0.11,
+    fontSize: windowWidth * 0.036,
+    fontWeight: '400',
+    textAlign: 'center',
+    marginTop: windowHeight * 0.02,
+    fontWeight: 'bold',
   },
-  Contents:{
-    width: 330,
-    height: 44,
-    backgroundColor: '#e6e6e6',
+  boxContainer: {
+    marginTop: windowHeight * 0.24, // 박스와 customText 사이 간격 조정
+    flexDirection: 'column', // 세로로 정렬
+    alignItems: 'center', // 중앙 정렬
+  },
+  clickableBox: {
+    width: windowWidth * 0.8, // 박스 너비 조정
+    height: windowHeight * 0.15, // 박스 높이 조정
+    backgroundColor: '#ffffff',
+    borderWidth:1,
+    borderColor: "#c8c8c8",
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 5,
-    marginTop: 8,
-    borderRadius: 8,
-    top: 100,
-
-  }
+    marginBottom: windowHeight*0.03, // 박스 사이 간격 조정
+  },
+  boxText: {
+    color: '#282828',
+    fontWeight: 'bold',
+  },
 });
