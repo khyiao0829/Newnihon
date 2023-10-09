@@ -20,17 +20,17 @@ const Stack = createStackNavigator();
 
 export default function App(){
 
-  useEffect(() => {
+  /*useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         //const navigation = useNavigation();
         //navigation.replace('Learning');
-        <Stack.Screen name="Learning" component={Learning} />
+        <Stack.Screen name="Learning" component={App} />
       }
     });
   
     return unsubscribe;
-  }, []);
+  }, []);*/
 
 return (
   <NavigationContainer>
