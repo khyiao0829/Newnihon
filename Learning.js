@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   human: {
     top:windowHeight*0.115, // 원하는 높이로 조정
-    right: windowWidth*0.07, // 원하는 좌측 여백으로 조정
+    right: windowWidth*0.07, // 원하는 우측 여백으로 조정
     position: 'absolute',
     width: windowWidth * 0.33,
     height: windowHeight * 0.2,
