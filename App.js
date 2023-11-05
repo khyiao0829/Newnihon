@@ -16,6 +16,7 @@ import SignupComplete from './SignupComplete';
 import SideMenu from './SideMenu';
 import WordQuiz from './WordQuiz';
 import Article from './Article';
+import Score from './ScorePage'
 
 import { app } from "./firebaseConfig";
 import { getAuth } from "firebase/auth";
@@ -36,6 +37,7 @@ function MainStack() {
       <Stack.Screen name="Learning" component={Learning} />
       <Stack.Screen name="Article" component={Article} />
       <Stack.Screen name="WordQuiz" component={WordQuiz} />
+      <Stack.Screen name="Score" component={Score} />
     </Stack.Navigator>
   );
 }

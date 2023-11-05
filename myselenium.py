@@ -9,19 +9,22 @@ from selenium.webdriver.chrome.options import Options
 options = Options()
 options.add_argument("--start-maximized")
 
-url = 'https://www.asahi.com/articles/ASRBS4G6HRBSUTIL002.html?iref=comtop_7_05'
-
 service = Service(ChromeDriverManager().install())
 
-num_browsers = 1
+driver = webdriver.Chrome(service=service, options=options)
 
-for _ in range(num_browsers):
-    driver = webdriver.Chrome(service=service, options=options)
-    driver.get(url)
-    
-    article_page = driver.find_element(By.CLASS_NAME, 'nfyQp')
-    print(article_page.text)
-    
-    driver.quit()
-    time.sleep(2)
+article_titles =[]
+url = 'https://www.asahi.com/whatsnew/ranking/?iref=pc_gnavi'
+driver.get(url)
 
+for i in range(1, 11):
+    xpath = f'//*[@id="AccesstopList"]/dl/dd[{i}]/p/a'
+    article_element = driver.find_element(By.XPATH, xpath)
+    article_title = article_element.text
+    article_titles.append(article_title)
+
+# 기사 제목 리스트를 출력합니다.
+for rank, title in enumerate(article_titles, 1):
+    print(f"{rank}. {title}")
+
+driver.quit()

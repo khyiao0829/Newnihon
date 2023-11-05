@@ -19,6 +19,9 @@
     ],
     "expo": {
       "name": "newnihon",
+      "extra": {
+        "API_KEY": "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",
+        "DEBUG": "true"},
       "slug": "your-app-slug",
       "version": "1.0.0",
       "plugins": [
